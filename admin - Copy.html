@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة الطلبات</title>
+  <!-- تضمين خط جميل -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
+  <style>
+    /* التصميم العام واستجابة الصفحة */
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background-color: #2e2e2e;
+      color: #fff;
+      direction: rtl;
+      padding-bottom: 20px;
+    }
+    .header {
+      background: linear-gradient(145deg, #3b3b3b, #1e1e1e);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 -1px 3px rgba(255,255,255,0.1);
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .button-container {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .button-container button {
+      background-color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      outline: none;
+    }
+    .button-container button img {
+      width: 20px;
+      height: 20px;
+    }
+    .button-container button:hover {
+      box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+    }
+    /* تصميم شريط القسم 3D */
+    .section {
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #3b3b3b, #1e1e1e);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 -1px 3px rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .section > input.section-name {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #fff;
+      color: #fff;
+      font-size: 18px;
+      outline: none;
+      width: 200px;
+      margin-bottom: 5px;
+    }
+    .section-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .section-buttons button {
+      background: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .section-buttons button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    /* نموذج إضافة الطلب داخل القسم */
+    .form-container {
+      display: none;
+      margin: 10px 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background-color: rgba(68,68,68,0.8);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
+    }
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+    .form-container button.save-order {
+      background: #28a745;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .form-container button.save-order:hover {
+      background: #218838;
+    }
+    /* قائمة الطلبات داخل القسم وتوسيطها */
+    .order-list {
+      margin: 10px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .order-item {
+      background: #555;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      width: 90%;
+      max-width: 500px;
+    }
+    .order-item img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 5px;
+      display: block;
+      margin: 0 auto;
+    }
+    .order-item .order-name,
+    .order-item .order-price,
+    .order-item .order-desc {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+    /* زر تعديل الطلب وآلية الحذف تظهر عند التعديل */
+    .order-edit-buttons {
+      margin-top: 8px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      align-items: center;
+    }
+    .order-edit-buttons button {
+      background: #ff5722;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .order-edit-buttons button:hover {
+      background: #e64a19;
+    }
+    .order-delete {
+      display: none;
+      background: #d32f2f;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .order-delete:hover {
+      background: #c62828;
+    }
+    /* استجابة التصميم */
+    @media (max-width: 600px) {
+      .section > input.section-name { width: 100%; }
+      .section-buttons { width: 100%; justify-content: space-around; margin-top: 5px; }
+    }
+  </style>
+  <script>
+    // إنشاء قسم جديد عند الضغط على زر add1.png
+    function createNewSection() {
+      const mainContainer = document.querySelector('body');
+      const section = document.createElement('div');
+      section.className = 'section';
+      section.innerHTML = `
+        <input type="text" class="section-name" placeholder="اسم القسم" onchange="updateSectionName(this)" />
+        <div class="section-buttons">
+          <button onclick="toggleOrderForm(this)">إضافة طلب</button>
+          <button onclick="deleteSection(this)">x</button>
+        </div>
+        <div class="form-container">
+          <input type="text" class="order-name" placeholder="اسم الطلب" />
+          <input type="number" class="order-price" placeholder="السعر (دينار عراقي)" />
+          <textarea class="order-desc" placeholder="محتويات الطلب"></textarea>
+          <input type="file" class="order-image" accept="image/*" />
+          <button class="save-order" onclick="saveOrder(this)">حفظ</button>
+        </div>
+        <div class="order-list"></div>
+      `;
+      mainContainer.appendChild(section);
+    }
+    // تحديث الاسم تلقائيًا عند تعديل حقل اسم القسم
+    function updateSectionName(input) {
+      input.setAttribute('value', input.value);
+    }
+    // حذف القسم بالكامل
+    function deleteSection(button) {
+      const section = button.closest('.section');
+      section.remove();
+    }
+    // إظهار أو إخفاء نموذج إضافة الطلب داخل القسم
+    function toggleOrderForm(button) {
+      const section = button.closest('.section');
+      const form = section.querySelector('.form-container');
+      form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+    }
+    // حفظ الطلب داخل القسم وإضافة الطلب إلى القائمة
+    function saveOrder(button) {
+      const form = button.parentElement;
+      const section = form.closest('.section');
+      const orderList = section.querySelector('.order-list');
+      
+      // الحصول على قيم الحقول
+      const orderName = form.querySelector('.order-name').value.trim();
+      const orderPrice = form.querySelector('.order-price').value.trim();
+      const orderDesc = form.querySelector('.order-desc').value.trim();
+      const orderImageFile = form.querySelector('.order-image').files[0];
+      
+      if (!orderName || !orderPrice || !orderDesc || !orderImageFile) {
+        alert("يرجى ملء جميع الحقول");
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const orderItem = document.createElement('div');
+        orderItem.className = 'order-item';
+        orderItem.innerHTML = `
+          <img src="${e.target.result}" alt="صورة الطلب">
+          <div class="order-name">${orderName}</div>
+          <div class="order-price">السعر: ${orderPrice} دينار</div>
+          <div class="order-desc">${orderDesc}</div>
+          <div class="order-edit-buttons">
+            <button onclick="toggleEditOrder(this)">تعديل</button>
+            <button class="order-delete" onclick="deleteOrder(this)">x</button>
+          </div>
+        `;
+        orderList.appendChild(orderItem);
+      };
+      reader.readAsDataURL(orderImageFile);
+      // تفريغ الحقول وإخفاء النموذج بعد الحفظ
+      form.querySelector('.order-name').value = "";
+      form.querySelector('.order-price').value = "";
+      form.querySelector('.order-desc').value = "";
+      form.querySelector('.order-image').value = "";
+      form.style.display = 'none';
+    }
+    // حذف الطلب
+    function deleteOrder(button) {
+      const orderItem = button.closest('.order-item');
+      orderItem.remove();
+    }
+    // تبديل وضع التعديل على الطلب
+    function toggleEditOrder(button) {
+      const orderItem = button.closest('.order-item');
+      // اذا كان الزر في وضع "تعديل" نبدل إلى "حفظ التعديلات"
+      if (button.textContent === "تعديل") {
+        const nameDiv = orderItem.querySelector('.order-name');
+        const priceDiv = orderItem.querySelector('.order-price');
+        const descDiv = orderItem.querySelector('.order-desc');
+        
+        const currentName = nameDiv.textContent;
+        const currentPrice = priceDiv.textContent.replace("السعر: ", "").replace(" دينار", "");
+        const currentDesc = descDiv.textContent;
+        
+        nameDiv.innerHTML = `<input type='text' value='${currentName}' style='width:100%; background:transparent; border: none; color:#fff;' />`;
+        priceDiv.innerHTML = `<input type='number' value='${currentPrice}' style='width:100%; background:transparent; border: none; color:#fff;' />`;
+        descDiv.innerHTML = `<textarea style='width:100%; background:transparent; border: none; color:#fff;'>${currentDesc}</textarea>`;
+        
+        const deleteBtn = orderItem.querySelector('.order-delete');
+        deleteBtn.style.display = 'inline-block';
+        button.textContent = "حفظ التعديلات";
+      } else {
+        // حفظ التعديلات وإعادة العرض للوضع الثابت
+        const nameInput = orderItem.querySelector('.order-name input');
+        const priceInput = orderItem.querySelector('.order-price input');
+        const descInput = orderItem.querySelector('.order-desc textarea');
+        
+        const newName = nameInput.value.trim();
+        const newPrice = priceInput.value.trim();
+        const newDesc = descInput.value.trim();
+        
+        if (!newName || !newPrice || !newDesc) {
+          alert("يرجى ملء جميع الحقول");
+          return;
+        }
+        
+        orderItem.querySelector('.order-name').textContent = newName;
+        orderItem.querySelector('.order-price').textContent = `السعر: ${newPrice} دينار`;
+        orderItem.querySelector('.order-desc').textContent = newDesc;
+        
+        const deleteBtn = orderItem.querySelector('.order-delete');
+        deleteBtn.style.display = 'none';
+        button.textContent = "تعديل";
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="header">
+    <h1>إدارة الطلبات</h1>
+    <div class="button-container">
+      <!-- زر add1.png لإضافة قسم جديد -->
+      <button onclick="createNewSection()">
+        <img src="add1.png" alt="إضافة قسم">
+      </button>
+    </div>
+  </div>
+</body>
+</html>
