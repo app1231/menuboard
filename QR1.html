@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كافيه</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('cofe1.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .button, .admin-button {
+            background: white;
+            border-radius: 50%;
+            padding: 4px; /* تقليل padding لتصغير الخلفية */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .button img, .admin-button img {
+            width: 40px; /* تقليل حجم الصورة */
+            height: 40px; /* تقليل حجم الصورة */
+            border-radius: 50%;
+        }
+        .button {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .admin-button {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            background-color: rgba(255, 255, 255, 0.7); /* اللون الأبيض الداكن */
+        }
+        /* تحسين الأزرار للشاشات الصغيرة */
+        @media (max-width: 600px) {
+            .button img, .admin-button img {
+                width: 35px;
+                height: 35px;
+            }
+            .button {
+                bottom: 3%;
+            }
+            .admin-button {
+                top: 3%;
+                right: 3%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="table1.html" class="button">
+        <img src="next.png" alt="التالي">
+    </a>
+    <a href="code.html" class="admin-button">
+        <img src="admin1.png" alt="الإدارة">
+    </a>
+</body>
+</html>
