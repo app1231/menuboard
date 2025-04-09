@@ -1,475 +1,70 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>إدارة الطلبات</title>
-  <!-- تضمين خط جميل -->
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet">
-  <style>
-    /* التصميم العام واستجابة الصفحة */
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background-color: #2e2e2e;
-      color: #fff;
-      direction: rtl;
-      padding-bottom: 20px;
-    }
-    .header {
-      background: linear-gradient(145deg, #3b3b3b, #1e1e1e);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 -1px 3px rgba(255,255,255,0.1);
-      padding: 20px;
-      text-align: center;
-      position: relative;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    .button-container {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    .button-container button {
-      background-color: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      outline: none;
-    }
-    .button-container button img {
-      width: 20px;
-      height: 20px;
-    }
-    .button-container button:hover {
-      box-shadow: 0 6px 8px rgba(0,0,0,0.4);
-    }
-    /* تصميم شريط القسم 3D */
-    .section {
-      margin: 10px;
-      padding: 10px;
-      border-radius: 10px;
-      background: linear-gradient(145deg, #3b3b3b, #1e1e1e);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.4), inset 0 -1px 3px rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
-    .section > input.section-name {
-      background: transparent;
-      border: none;
-      border-bottom: 2px solid #fff;
-      color: #fff;
-      font-size: 18px;
-      outline: none;
-      width: 200px;
-      margin-bottom: 5px;
-    }
-    .section-buttons {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .section-buttons button {
-      background: transparent;
-      border: 2px solid #fff;
-      color: #fff;
-      padding: 8px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .section-buttons button:hover {
-      background: rgba(255,255,255,0.2);
-    }
-    /* نموذج إضافة الطلب داخل القسم */
-    .form-container {
-      display: none;
-      margin: 10px 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgba(68,68,68,0.8);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-    }
-    .form-container input,
-    .form-container textarea {
-      width: 100%;
-      margin-bottom: 10px;
-      padding: 8px;
-      border: none;
-      border-radius: 5px;
-      outline: none;
-      font-size: 16px;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-    }
-    .form-container button.save-order {
-      background: #28a745;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .form-container button.save-order:hover {
-      background: #218838;
-    }
-    /* قائمة الطلبات داخل القسم وتوسيطها */
-    .order-list {
-      margin: 10px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .order-item {
-      background: #555;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      width: 90%;
-      max-width: 500px;
-    }
-    .order-item img {
-      width: 100%;
-      max-height: 300px;
-      object-fit: cover;
-      border-radius: 5px;
-      display: block;
-      margin: 0 auto;
-    }
-    .order-item .order-name,
-    .order-item .order-price,
-    .order-item .order-desc {
-      margin: 5px 0;
-      font-size: 16px;
-    }
-    /* زر تعديل الطلب وآلية الحذف تظهر عند التعديل */
-    .order-edit-buttons {
-      margin-top: 8px;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      align-items: center;
-    }
-    .order-edit-buttons button {
-      background: #ff5722;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .order-edit-buttons button:hover {
-      background: #e64a19;
-    }
-    .order-delete {
-      display: none;
-      background: #d32f2f;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      color: #fff;
-      cursor: pointer;
-    }
-    .order-delete:hover {
-      background: #c62828;
-    }
-    /* استجابة التصميم */
-    @media (max-width: 600px) {
-      .section > input.section-name { width: 100%; }
-      .section-buttons { width: 100%; justify-content: space-around; margin-top: 5px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كافيه</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('cofe1.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .button, .admin-button {
+            background: white;
+            border-radius: 50%;
+            padding: 4px; /* تقليل padding لتصغير الخلفية */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .button img, .admin-button img {
+            width: 40px; /* تقليل حجم الصورة */
+            height: 40px; /* تقليل حجم الصورة */
+            border-radius: 50%;
+        }
+        .button {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .admin-button {
+            position: absolute;
+            top: 5%;
+            right: 5%;
+            background-color: rgba(255, 255, 255, 0.7); /* اللون الأبيض الداكن */
+        }
+        /* تحسين الأزرار للشاشات الصغيرة */
+        @media (max-width: 600px) {
+            .button img, .admin-button img {
+                width: 35px;
+                height: 35px;
+            }
+            .button {
+                bottom: 3%;
+            }
+            .admin-button {
+                top: 3%;
+                right: 3%;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <h1>إدارة الطلبات</h1>
-    <div class="button-container">
-      <!-- زر add1.png لإضافة قسم جديد -->
-      <button onclick="createNewSectionUI()">
-        <img src="add1.png" alt="إضافة قسم">
-      </button>
-    </div>
-  </div>
-
-  <!-- هنا يتم إضافة الأقسام ديناميكيًا -->
-  <div id="sections-container"></div>
-
-  <!-- سكربت Firebase وجميع الدوال لإدارة الأقسام والطلبات -->
-  <script type="module">
-    // استيراد الدوال المطلوبة من مكتبة Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, updateDoc, doc, deleteDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore.js";
-
-    // إعدادات Firebase الخاصة بمشروعك
-    const firebaseConfig = {
-      apiKey: "AIzaSyASb_S2U-QO7pjNRD5eBC8YVrqzJtn2GsI",
-      authDomain: "app1-56158.firebaseapp.com",
-      projectId: "app1-56158",
-      storageBucket: "app1-56158.firebasestorage.app",
-      messagingSenderId: "1023389536242",
-      appId: "1:1023389536242:web:94c5a691273208bb4ae56b"
-    };
-
-    // تهيئة Firebase و Firestore
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const sectionsContainer = document.getElementById("sections-container");
-
-    // دالة لإنشاء قسم جديد في واجهة المستخدم وتخزينه في Firestore
-    async function createNewSectionUI(sectionData = null, sectionId = null) {
-      // إذا لم يتم تمرير بيانات القسم، فإننا ننشئ قسمًا جديدًا مع اسم افتراضي
-      let name = sectionData && sectionData.name ? sectionData.name : "قسم جديد";
-      
-      // إذا لم يكن القسم موجود بالفعل في Firebase، نقوم بإضافته أولاً
-      if (!sectionId) {
-        try {
-          const docRef = await addDoc(collection(db, "sections"), {
-            name,
-            createdAt: new Date()
-          });
-          sectionId = docRef.id;
-          console.log("تم إضافة القسم بمعرف: ", sectionId);
-        } catch (e) {
-          console.error("خطأ أثناء إنشاء القسم:", e);
-          return;
-        }
-      }
-
-      // إنشاء عنصر القسم في الواجهة وإضافة بيانات معرف القسم له
-      const sectionElem = document.createElement("div");
-      sectionElem.className = "section";
-      sectionElem.dataset.sectionId = sectionId;
-      sectionElem.innerHTML = `
-        <input type="text" class="section-name" placeholder="اسم القسم" value="${name}" onchange="updateSectionNameFirebase(this)" />
-        <div class="section-buttons">
-          <button onclick="toggleOrderForm(this)">إضافة طلب</button>
-          <button onclick="deleteSectionFirebase(this)">x</button>
-        </div>
-        <div class="form-container">
-          <input type="text" class="order-name" placeholder="اسم الطلب" />
-          <input type="number" class="order-price" placeholder="السعر (دينار عراقي)" />
-          <textarea class="order-desc" placeholder="محتويات الطلب"></textarea>
-          <input type="file" class="order-image" accept="image/*" />
-          <button class="save-order" onclick="saveOrder(this)">حفظ</button>
-        </div>
-        <div class="order-list"></div>
-      `;
-
-      sectionsContainer.appendChild(sectionElem);
-
-      // استدعاء دالة لاسترجاع الطلبات الخاصة بهذا القسم
-      loadOrders(sectionId, sectionElem.querySelector('.order-list'));
-    }
-
-    // دالة لتحديث اسم القسم في Firestore عند تغييره في الواجهة
-    async function updateSectionNameFirebase(inputElem) {
-      const sectionElem = inputElem.closest(".section");
-      const sectionId = sectionElem.dataset.sectionId;
-      const newName = inputElem.value.trim();
-      if (!newName) return;
-      try {
-        await updateDoc(doc(db, "sections", sectionId), { name: newName });
-        console.log("تم تحديث اسم القسم");
-      } catch(e) {
-        console.error("خطأ أثناء تحديث القسم:", e);
-      }
-    }
-
-    // دالة لحذف القسم من الواجهة و Firestore
-    async function deleteSectionFirebase(button) {
-      const sectionElem = button.closest(".section");
-      const sectionId = sectionElem.dataset.sectionId;
-      // يمكن هنا أيضاً حذف الطلبات الفرعية إن رغبت باستخدام عمليات الحذف المناسبة
-      try {
-        await deleteDoc(doc(db, "sections", sectionId));
-        sectionElem.remove();
-        console.log("تم حذف القسم");
-      } catch(e) {
-        console.error("خطأ أثناء حذف القسم:", e);
-      }
-    }
-
-    // دالة لتبديل ظهور/إخفاء نموذج إضافة الطلب داخل القسم
-    function toggleOrderForm(button) {
-      const sectionElem = button.closest(".section");
-      const form = sectionElem.querySelector(".form-container");
-      form.style.display = (form.style.display === "block") ? "none" : "block";
-    }
-
-    // دالة لحفظ الطلب في واجهة المستخدم وفي Firestore (ضمن مجموعة الطلبات للقسم)
-    function saveOrder(button) {
-      const form = button.parentElement;
-      const sectionElem = form.closest(".section");
-      const orderList = sectionElem.querySelector(".order-list");
-      const sectionId = sectionElem.dataset.sectionId;
-      
-      // قراءة قيم الطلب من النموذج
-      const orderName = form.querySelector(".order-name").value.trim();
-      const orderPrice = form.querySelector(".order-price").value.trim();
-      const orderDesc = form.querySelector(".order-desc").value.trim();
-      const orderImageFile = form.querySelector(".order-image").files[0];
-      
-      if (!orderName || !orderPrice || !orderDesc || !orderImageFile) {
-        alert("يرجى ملء جميع الحقول");
-        return;
-      }
-      
-      const reader = new FileReader();
-      reader.onload = async function(e) {
-        // إنشاء عنصر الطلب في الواجهة
-        const orderItem = document.createElement("div");
-        orderItem.className = "order-item";
-        orderItem.innerHTML = `
-          <img src="${e.target.result}" alt="صورة الطلب">
-          <div class="order-name">${orderName}</div>
-          <div class="order-price">السعر: ${orderPrice} دينار</div>
-          <div class="order-desc">${orderDesc}</div>
-          <div class="order-edit-buttons">
-            <button onclick="toggleEditOrder(this)">تعديل</button>
-            <button class="order-delete" onclick="deleteOrder(this)">x</button>
-          </div>
-        `;
-        orderList.appendChild(orderItem);
-
-        // حفظ الطلب في Firestore داخل مجموعة الطلبات الخاصة بهذا القسم
-        const orderData = {
-          name: orderName,
-          price: orderPrice,
-          description: orderDesc,
-          imageData: e.target.result, // في المثال حفظ الصورة كـ Data URL
-          createdAt: new Date()
-        };
-
-        try {
-          // إضافة وثيقة الطلب إلى المجموعة الفرعية "orders" داخل القسم المحدد
-          await addDoc(collection(db, "sections", sectionId, "orders"), orderData);
-          console.log("تم حفظ الطلب في القسم:", sectionId);
-        } catch(ex) {
-          console.error("خطأ أثناء حفظ الطلب:", ex);
-        }
-      };
-      reader.readAsDataURL(orderImageFile);
-
-      // إعادة تعيين النموذج وإخفائه
-      form.querySelector(".order-name").value = "";
-      form.querySelector(".order-price").value = "";
-      form.querySelector(".order-desc").value = "";
-      form.querySelector(".order-image").value = "";
-      form.style.display = "none";
-    }
-
-    // دوال للتعديل والحذف على الطلبات (كما في المثال السابق)
-    function deleteOrder(button) {
-      const orderItem = button.closest(".order-item");
-      orderItem.remove();
-      // يُمكنك أيضًا حذف الطلب من Firestore إذا كان لديك المعرف الخاص به
-    }
-    function toggleEditOrder(button) {
-      const orderItem = button.closest(".order-item");
-      if (button.textContent === "تعديل") {
-        const nameDiv = orderItem.querySelector(".order-name");
-        const priceDiv = orderItem.querySelector(".order-price");
-        const descDiv = orderItem.querySelector(".order-desc");
-        
-        const currentName = nameDiv.textContent;
-        const currentPrice = priceDiv.textContent.replace("السعر: ", "").replace(" دينار", "");
-        const currentDesc = descDiv.textContent;
-        
-        nameDiv.innerHTML = `<input type='text' value='${currentName}' style='width:100%; background:transparent; border: none; color:#fff;' />`;
-        priceDiv.innerHTML = `<input type='number' value='${currentPrice}' style='width:100%; background:transparent; border: none; color:#fff;' />`;
-        descDiv.innerHTML = `<textarea style='width:100%; background:transparent; border: none; color:#fff;'>${currentDesc}</textarea>`;
-        
-        const deleteBtn = orderItem.querySelector(".order-delete");
-        deleteBtn.style.display = "inline-block";
-        button.textContent = "حفظ التعديلات";
-      } else {
-        const nameInput = orderItem.querySelector(".order-name input");
-        const priceInput = orderItem.querySelector(".order-price input");
-        const descInput = orderItem.querySelector(".order-desc textarea");
-        
-        const newName = nameInput.value.trim();
-        const newPrice = priceInput.value.trim();
-        const newDesc = descInput.value.trim();
-        
-        if (!newName || !newPrice || !newDesc) {
-          alert("يرجى ملء جميع الحقول");
-          return;
-        }
-        
-        orderItem.querySelector(".order-name").textContent = newName;
-        orderItem.querySelector(".order-price").textContent = `السعر: ${newPrice} دينار`;
-        orderItem.querySelector(".order-desc").textContent = newDesc;
-        
-        const deleteBtn = orderItem.querySelector(".order-delete");
-        deleteBtn.style.display = "none";
-        button.textContent = "تعديل";
-      }
-    }
-
-    // دالة لتحميل الأقسام والطلبات عند بدء تحميل الصفحة
-    async function loadSections() {
-      try {
-        // استرجاع الأقسام من Firestore بترتيب تاريخ الإنشاء
-        const q = query(collection(db, "sections"), orderBy("createdAt", "asc"));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((docSnap) => {
-          createNewSectionUI(docSnap.data(), docSnap.id);
-        });
-      } catch(e) {
-        console.error("خطأ أثناء تحميل الأقسام:", e);
-      }
-    }
-
-    // دالة لتحميل الطلبات الخاصة بقسم معين
-    async function loadOrders(sectionId, orderListElem) {
-      try {
-        const ordersSnapshot = await getDocs(collection(db, "sections", sectionId, "orders"));
-        ordersSnapshot.forEach((docSnap) => {
-          const orderData = docSnap.data();
-          // إنشاء عنصر الطلب في الواجهة
-          const orderItem = document.createElement("div");
-          orderItem.className = "order-item";
-          orderItem.innerHTML = `
-            <img src="${orderData.imageData}" alt="صورة الطلب">
-            <div class="order-name">${orderData.name}</div>
-            <div class="order-price">السعر: ${orderData.price} دينار</div>
-            <div class="order-desc">${orderData.description}</div>
-            <div class="order-edit-buttons">
-              <button onclick="toggleEditOrder(this)">تعديل</button>
-              <button class="order-delete" onclick="deleteOrder(this)">x</button>
-            </div>
-          `;
-          orderListElem.appendChild(orderItem);
-        });
-      } catch(e) {
-        console.error("خطأ أثناء تحميل الطلبات:", e);
-      }
-    }
-
-    // عند تحميل الصفحة، نقوم بتحميل الأقسام والطلبات من Firestore
-    loadSections();
-
-    // جعل بعض الدوال متاحة على النافذة إذا احتجت للوصول إليها من عناصر HTML
-    window.createNewSectionUI = createNewSectionUI;
-    window.updateSectionNameFirebase = updateSectionNameFirebase;
-    window.deleteSectionFirebase = deleteSectionFirebase;
-    window.toggleOrderForm = toggleOrderForm;
-    window.saveOrder = saveOrder;
-    window.toggleEditOrder = toggleEditOrder;
-    window.deleteOrder = deleteOrder;
-
-    console.log("تم ربط الصفحة بـ Firebase بنجاح");
-  </script>
+    <a href="table1.html" class="button">
+        <img src="next.png" alt="التالي">
+    </a>
+    <a href="code.html" class="admin-button">
+        <img src="admin1.png" alt="الإدارة">
+    </a>
 </body>
 </html>
